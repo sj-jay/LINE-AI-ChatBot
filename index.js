@@ -10,8 +10,8 @@ const lineConfig = {
     channelSecret: process.env.LINE_CHANNEL_SECRET,
 };
 
-// create LINE SDK client
-const lineClient = new line.Client(lineConfig);
+// create LINE SDK client (v11 API)
+const lineClient = new line.messagingApi.MessagingApiClient(lineConfig);
 
 // create Express app
 const app = express();
@@ -44,7 +44,7 @@ async function handleEvent2(event) {
             type: 'text',
             text: aiResponse,
         };
-        await lineClient.replyMessage(replyToken, message);
+        await lineClient.replyMessage({ replyToken, messages: [message] });
     }
 }
 
